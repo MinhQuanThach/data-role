@@ -9,6 +9,8 @@ RAW["Raw"]
     OPS(["Data Ops<br/>Team"])
     MODEL(["Data Model<br/>Team"])
     GOV_OUT(["Data Governance<br/>Team"])
+    BI(["Business Intelligence<br/>Team"])
+    DS(["Data Scientist<br/>Team"])
 
     subgraph PLATFORM["Data Platform"]
         direction TB
@@ -42,13 +44,17 @@ RAW["Raw"]
 
     RAW --> PLATFORM
     GOV_IN -->|"Governance đầu vào"| PLATFORM
-    ING -->|"Ingestion"| PLATFORM
+    ING --> PLATFORM
     OPS --> PLATFORM
     MODEL --> PLATFORM
 
     PLATFORM --> CLEAN
     GOV_OUT -->|"Governance đầu ra"| CLEAN
-    CLEAN --> DWH
+    CLEAN --> ANALYTICS
+
+    BI --> ANALYTICS
+    DS --> CLEAN
+    DS --> ANALYTICS
 
     DWH --> REPORTS
     DWH --> QUERY
@@ -84,8 +90,9 @@ RAW["Raw"]
 
 - Dựa trên mô hình, mapping và quy tắc đã thống nhất với Data Model
   để xây dựng và vận hành các pipeline biến đổi dữ liệu.
+- Thiết kế CI/CD
 - Xây dựng hoặc sử dụng các công cụ và framework hỗ trợ:
-  - ETL/ELT và các bước biến đổi dữ liệu.
+  - ETL và các bước biến đổi dữ liệu.
   - Pipeline orchestration và lập lịch.
   - Xử lý batch hoặc streaming.
   - Kiểm tra chất lượng dữ liệu.
@@ -109,8 +116,27 @@ RAW["Raw"]
   - Trường hợp nào cần masking hoặc áp dụng biện pháp bảo vệ khác.
   - Trường hợp nào không được thu thập, chia sẻ hoặc sử dụng.
 - Xác định hoặc điều phối việc thống nhất các tiêu chuẩn về chất lượng, metadata, định nghĩa dữ liệu, lineage và thời gian lưu giữ.
-- Quy định rõ ai phê duyệt quyền truy cập và các ngoại lệ.
 - Phối hợp với Data Infrastructure và Data Ops để triển khai các chính sách thành kiểm soát kỹ thuật trên nền tảng và pipeline.
+
+## 6. Business Intelligence (BI)
+
+- Làm việc với các bộ phận nghiệp vụ để xác định nhu cầu báo cáo, phân tích và theo dõi hoạt động.
+- Cung cấp dữ liệu thô và yêu cầu nghiệp vụ của dự án.
+- Phối hợp với Data Model để thống nhất định nghĩa chỉ số, quy tắc tính toán và cấu trúc dữ liệu phù hợp với nghiệp vụ và nhu cầu.
+- Sử dụng dữ liệu từ Data Warehouse, Data Mart hoặc các lớp dữ liệu.
+- Xây dựng và duy trì:
+  - Reports và dashboards.
+  - Các truy vấn phục vụ phân tích nghiệp vụ.
+  - Các chỉ số và mô hình ngữ nghĩa dùng chung.
+
+## 7. Data Scientist
+
+- Làm việc với các bên để xác định bài toán phân tích, dự đoán hoặc tối ưu hóa có thể giải quyết bằng dữ liệu.
+- Khám phá, phân tích và chuẩn bị dữ liệu từ các nguồn (clean/curated tables, Data Warehouse hoặc Data Mart).
+- Xây dựng, thử nghiệm và đánh giá các mô hình thống kê hoặc ML phù hợp với bài toán.
+- Diễn giải kết quả, đánh giá giới hạn của mô hình và trao đổi kết quả với các bên liên quan.
+- Phối hợp với Data Model và Data Ops khi cần dữ liệu, features hoặc pipeline dữ liệu.
+- Phối hợp với Data Infrastructure khi cần môi trường tính toán hoặc đưa mô hình vào vận hành.
 
 ## Điểm bàn giao giữa các nhóm
 
